@@ -6,7 +6,7 @@ class Graph:
 
     def __init__(self):
         self._adjacency = {}
-        self._canon_station: list[str] = []
+        self._canon_station = []
 
     def add_node(self, node: str) -> None:
         if node not in self._adjacency:
@@ -57,7 +57,7 @@ class Graph:
     def get_random_node(self) -> str:
         return choice(self.get_stations())
 
-    def get_route(self, target: str, pred: dict[str, str]) -> list[str]:
+    def get_route(self, target: str, pred):
         route = [target]
         act = target
         while pred[act] != act:
@@ -65,7 +65,7 @@ class Graph:
             act = pred[act]
         return route[::-1]
 
-    def print_route(self, route: list[str]) -> str:
+    def print_route(self, route) -> str:
         current_start = None
         current_line = None
         to_print = []
