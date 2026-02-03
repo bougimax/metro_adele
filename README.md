@@ -1,24 +1,48 @@
 # Métro Adèle
 
-## Etape 1 : Installer Python
-
-Tout d'abord, installer [HomeBrew](https://brew.sh/) avec la commande suivante (dans le terminal, c'est une
-app du mac):
-
 *Quand je dis avec la commande ou rentrer la commander, juste tu copies, tu colles dans le terminal et tu
 tapes la touche entrée*
+
+## Etape 1 : Cloner le Git
+
+Va dans ton terminal, théoriquement tu vas arriver à ton `Home` directory, i.e. le dossier que tu as quand tu
+ouvres Finder. Là cette étape va consister à télécharger les fichiers que j'ai édité, pour ça tu vas devoir
+choisir où tu les mets. Pour ça ce que tu peux faire c'est aller dans ton Finder, créer un dossier là où tu
+veux et ensuite tu fais clic-droit dessus et normalement tu devrais avoir une option **Nouveau terminal au
+dossier**. Si tu cliques dessus ça va t'ouvrir un terminal dans ce dossier.
+
+A partir de là tu peux faire:
+
+```sh
+git clone https://github.com/bougimax/metro_adele.git
+```
+
+Puis:
+
+```sh
+cd metro_adele
+```
+
+Pour aller dans le dossier
+
+
+## Etape 2 : Installer Python
+
+Ensuite tu vas installer [HomeBrew](https://brew.sh/) avec la commande suivante (dans le terminal, c'est une
+app du mac):
+
 
 ```sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-Puis
+Puis:
 
 ```sh
 brew update
 ```
 
-Et enfin:
+Ca va permettre de télécharger `python` avec:
 
 ```sh
 brew install python
@@ -39,7 +63,7 @@ Python 3.x.x
 où les x vont être des numéros chez toi
 
 
-## Etape 2 : Installer les dépendances
+## Etape 3 : Installer les dépendances
 
 Installer les dépendances du projet, on commence par créer un environnement virtuel:
 
@@ -56,10 +80,10 @@ source .venv/bin/activate
 Enfin tu peux exécuter:
 
 ```sh
-python -m pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 ```
 
-## Etape 3 : Lancer l'application
+## Etape 4 : Lancer l'application
 
 Tu lances l'application avec:
 
