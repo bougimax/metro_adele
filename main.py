@@ -1,9 +1,8 @@
-from Graph import Graph
 from Utils import construct_metro_map
 
 
 def main():
-    metro_map: Graph = construct_metro_map()
+    metro_map = construct_metro_map()
 
     source: str = metro_map.get_random_node()
     target: str = metro_map.get_random_node()

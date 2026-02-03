@@ -1,4 +1,3 @@
-from typing import Any, Iterable, Tuple
 from pile import File
 from random import choice
 
@@ -6,7 +5,7 @@ from random import choice
 class Graph:
 
     def __init__(self):
-        self._adjacency: dict[str, dict[str, dict[str, Any]]] = {}
+        self._adjacency = {}
         self._canon_station: list[str] = []
 
     def add_node(self, node: str) -> None:
@@ -16,25 +15,21 @@ class Graph:
             self._canon_station.append(self.get_station_name(node))
             self._adjacency[self.get_station_name(node)] = {}
 
-    def add_directed_edge(
-        self, u: str, v: str, attributes: dict[str, Any] | None = None
-    ) -> None:
+    def add_directed_edge(self, u: str, v: str, attributes=None) -> None:
         self.add_node(u)
         self._adjacency[u][v] = {} if attributes is None else attributes
 
-    def add_undirected_edge(
-        self, u: str, v: str, attributes: dict[str, Any] | None = None
-    ) -> None:
+    def add_undirected_edge(self, u: str, v: str, attributes=None) -> None:
         self.add_directed_edge(u, v, attributes)
         self.add_directed_edge(v, u, attributes)
 
     def get_station_name(self, u: str) -> str:
         return u.split("_")[0]
 
-    def get_neighbours(self, u: str) -> Iterable[str]:
+    def get_neighbours(self, u: str):
         return self._adjacency[u]
 
-    def get_stations(self) -> Iterable[str]:
+    def get_stations(self):
         return self._canon_station
 
     def connect_correspondance(self, u: str) -> None:
@@ -42,7 +37,7 @@ class Graph:
             self.get_station_name(u), u, {"line": "Correspondance"}
         )
 
-    def bfs(self, s: str) -> Tuple[dict[str, int], dict[str, str]]:
+    def bfs(self, s: str):
         f = File()
         f.enfiler(s)
         pred, dist = {}, {}

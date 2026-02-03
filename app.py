@@ -1,10 +1,9 @@
 from flask import Flask, request, render_template
-from Graph import Graph
 from Utils import construct_metro_map
 
 app = Flask(__name__)
 
-metro_map: Graph = construct_metro_map()
+metro_map = construct_metro_map()
 
 
 @app.route("/")
