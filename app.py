@@ -21,9 +21,10 @@ TEXT_ROUTE = ""
 def play():
     global TEXT_ROUTE, SOURCE, TARGET
     if request.method == "POST":
+        list_route = "\n".join([f"<li>{l}</li>" for l in TEXT_ROUTE])
         return f"""<p>La meilleure route de {SOURCE} à {TARGET} était de:</p>
                    <ul>
-                        {"\n".join([f"<li>{l}</li>" for l in TEXT_ROUTE])}
+                        {list_route}
                    </ul>
                    <a href="play"><h1>Play again</h1></a>
                 """
