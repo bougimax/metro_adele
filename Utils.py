@@ -76,7 +76,10 @@ def create_solution_map(metro_map, route):
         _, u_loc = get_closest_name(loc, metro_map.get_station_name(u))
         _, v_loc = get_closest_name(loc, metro_map.get_station_name(v))
         if metro_map._adjacency[u][v]["line"] != "Correspondance":
-            color = f"#{colors.get(metro_map.get_line_name(u),"000000").lower()}"
+            if metro_map.get_line_name(u) in colors:
+                color = f"#{colors[metro_map.get_line_name(u)]}"
+            else:
+                color = "#000000"
             folium.PolyLine(
                 [
                     loc[u_loc]["coord"],
