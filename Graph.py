@@ -26,6 +26,13 @@ class Graph:
     def get_station_name(self, u: str) -> str:
         return u.split("_")[0]
 
+    def get_line_name(self, u: str) -> str:
+        s = u.split("_")
+        if len(s) <= 1:
+            return ""
+        else:
+            return s[1].replace("_", " ").lower()
+
     def get_neighbours(self, u: str):
         return self._adjacency[u]
 
