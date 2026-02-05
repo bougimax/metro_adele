@@ -110,9 +110,9 @@ def create_solution_map(metro_map, route):
             folium.CircleMarker(
                 location=loc[u_loc]["coord"],
                 radius=radius,
-                color="#25303b",
+                color=f"#{colors[metro_map.get_line_name(u).lower()]}",
                 fill=True,
-                fill_color="#25303b",
+                fill_color=f"#{colors[metro_map.get_line_name(u).lower()]}",
                 fill_opacity=1,
                 opacity=1,
                 tooltip=u_loc,
