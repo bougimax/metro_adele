@@ -4,6 +4,7 @@ import pathlib
 import json
 from levenshtein import levenshtein_linear_space
 import xyzservices.providers as xyz
+from math import sqrt
 
 LIGNES = pathlib.Path("lignes")
 
@@ -121,8 +122,14 @@ def create_solution_map(metro_map, route):
     return m
 
 
+def l2_distance(p1, p2):
+    return sqrt(sum(x_1**2 + x_2**2 for x_1, x_2 in zip(p1, p2)))
+
+
 def construct_metro_map():
     g = Graph()
+    with open(pathlib.Path("localisations_stations.json"), "r") as f:
+        loc = json.load(f)
 
     for file in LIGNES.iterdir():
         with open(file, "r") as f:
@@ -140,13 +147,21 @@ def construct_metro_map():
                 add_undirected = False
             lines = list(map(str.strip, f.readlines()))
             for u, v in zip(lines[:-1], lines[1:]):
+                _, u_loc = get_closest_name(loc, u)
+                _, v_loc = get_closest_name(loc, v)
+                coord_u = loc[u_loc]["coord"]
+                coord_v = loc[v_loc]["coord"]
                 if add_undirected:
                     g.add_undirected_edge(
-                        f"{u}_{line_number}", f"{v}_{line_number}", {"line": line_name}
+                        f"{u}_{line_number}",
+                        f"{v}_{line_number}",
+                        {"line": line_name, "distance": l2_distance(coord_u, coord_v)},
                     )
                 else:
                     g.add_directed_edge(
-                        f"{u}_{line_number}", f"{v}_{line_number}", {"line": line_name}
+                        f"{u}_{line_number}",
+                        f"{v}_{line_number}",
+                        {"line": line_name, "distance": l2_distance(coord_u, coord_v)},
                     )
                 g.connect_correspondance(f"{u}_{line_number}")
                 g.connect_correspondance(f"{v}_{line_number}")

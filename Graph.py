@@ -1,5 +1,7 @@
 from pile import File
 from random import choice
+import heapq
+from math import inf
 
 
 class Graph:
@@ -41,7 +43,7 @@ class Graph:
 
     def connect_correspondance(self, u: str) -> None:
         self.add_undirected_edge(
-            self.get_station_name(u), u, {"line": "Correspondance"}
+            self.get_station_name(u), u, {"line": "Correspondance", "weight": 3}
         )
 
     def bfs(self, s: str):
@@ -53,12 +55,33 @@ class Graph:
         dist[s] = 0
         while not f.est_vide():
             act = f.defiler()
-            vu.add(act)
-            for neigh in self.get_neighbours(act):
-                if neigh not in vu:
-                    f.enfiler(neigh)
-                    pred[neigh] = act
-                    dist[neigh] = dist[act] + 1
+            if act not in vu:
+                vu.add(act)
+                for neigh in self.get_neighbours(act):
+                    if neigh not in vu:
+                        f.enfiler(neigh)
+                        pred[neigh] = act
+                        dist[neigh] = dist[act] + 1
+        return dist, pred
+
+    def dijkstra(self, s: str, key=lambda d: d.get("weight", 1)):
+        q = []
+        heapq.heappush(q, (0, s))
+        pred, dist = {}, {}
+        vu = set()
+        pred[s] = s
+        dist[s] = 0
+        while q:
+            _, act = heapq.heappop(q)
+            if act not in vu:
+                vu.add(act)
+                for neigh in self.get_neighbours(act):
+                    if neigh not in vu:
+                        updated_d = dist[act] + key(self._adjacency[act][neigh])
+                        if updated_d < dist.get(neigh, inf):
+                            heapq.heappush(q, (updated_d, neigh))
+                            pred[neigh] = act
+                            dist[neigh] = updated_d
         return dist, pred
 
     def get_random_node(self) -> str:
